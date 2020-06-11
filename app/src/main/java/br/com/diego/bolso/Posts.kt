@@ -4,19 +4,23 @@ import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
 
-data class Repository(
+data class Post(
     @SerializedName("id")
     var id : Int,
+    @SerializedName("createdAt")
+    var createdAt : String,
     @SerializedName("name")
     var name : String,
-    @SerializedName("language")
-    var language : String,
     @SerializedName("image")
-    var image: String
+    var image: String,
+    @SerializedName("tag")
+    var tag: String,
+    @SerializedName("content")
+    var content: String
 )
 
 interface Endpoint {
 
-    @GET("repos")
-    fun getPosts() : Call<List<Repository>>
+    @GET("posts")
+    fun getPosts() : Call<List<Post>>
 }
