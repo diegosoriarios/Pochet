@@ -1,8 +1,6 @@
-package br.com.diego.bolso
+package br.com.diego.storytell.models
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.Call
-import retrofit2.http.GET
 
 data class Post(
     @SerializedName("id")
@@ -18,9 +16,3 @@ data class Post(
     @SerializedName("content")
     var content: String
 )
-
-interface Endpoint {
-
-    @GET("posts")
-    fun getPosts() : Call<List<Post>>
-}

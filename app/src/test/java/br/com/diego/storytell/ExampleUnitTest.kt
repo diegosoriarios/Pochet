@@ -1,4 +1,4 @@
-package br.com.diego.bolso
+package br.com.diego.storytell
 
 import org.junit.Test
 
