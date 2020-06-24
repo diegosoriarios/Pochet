@@ -47,10 +47,9 @@ class MainActivity : AppCompatActivity() {
             val adapter = PostAdapter(this, posts)
             listView.adapter = adapter
             listView.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id -> //here you can use the position to determine what checkbox to check
-                    //this assumes that you have an array of your checkboxes as well. called checkbox
-                    Toast.makeText(this, posts[position].image, Toast.LENGTH_SHORT).show()
-                    goPostDetailPage(posts[position])
+                AdapterView.OnItemClickListener { parent, view, position, id ->
+                    val imageItem = view.findViewById<ImageView>(R.id.thumbnail)
+                    goPostDetailPage(posts[position], imageItem)
                 }
         })
 
@@ -59,11 +58,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun goPostDetailPage(post: Post) {
+    private fun goPostDetailPage(post: Post, imageView: ImageView) {
         val intent = Intent(this, PostDetailActivity::class.java).apply {
             putExtra("PostJson", Gson().toJson(post))
         }
-        val imageView: ImageView = listView.findViewById(R.id.thumbnail)
+        //val imageView: ImageView = listView.findViewById(R.id.thumbnail)
         val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this, imageView, ViewCompat.getTransitionName(imageView).toString()
         )
