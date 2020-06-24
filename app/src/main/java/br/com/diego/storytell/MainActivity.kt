@@ -12,13 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.diego.storytell.models.Post
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-
-val EXTRA_MESSAGE = "br.com.diego.storytell.MESSAGE"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var listView: ListView
@@ -28,11 +28,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_message)
-
-        /*val message = intent.getStringExtra(EXTRA_MESSAGE)
-        val textView = findViewById<TextView>(R.id.textView).apply {
-            text = message
-        }*/
 
         listView = findViewById(R.id.recipe_list_view)
         progressBar = findViewById(R.id.progressBar)
@@ -57,9 +52,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, posts[position].image, Toast.LENGTH_SHORT).show()
                     goPostDetailPage(posts[position])
                 }
-            /*post.forEach{ p ->
-                Log.d("Names", p.name)
-            }*/
         })
 
         refreshLayout.setOnRefreshListener {
@@ -71,7 +63,11 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, PostDetailActivity::class.java).apply {
             putExtra("PostJson", Gson().toJson(post))
         }
-        startActivity(intent)
+        val imageView: ImageView = listView.findViewById(R.id.thumbnail)
+        val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this, imageView, ViewCompat.getTransitionName(imageView).toString()
+        )
+        startActivity(intent, options.toBundle())
     }
 }
 
