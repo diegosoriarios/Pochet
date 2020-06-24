@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.diego.storytell.models.Post
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
@@ -22,6 +23,7 @@ val EXTRA_MESSAGE = "br.com.diego.storytell.MESSAGE"
 class MainActivity : AppCompatActivity() {
     private lateinit var listView: ListView
     private lateinit var progressBar: ProgressBar
+    private lateinit var refreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         listView = findViewById(R.id.recipe_list_view)
         progressBar = findViewById(R.id.progressBar)
+        refreshLayout = findViewById(R.id.swiperefresh)
 
         val model: MyViewModel by viewModels()
         model.getPosts().observe(this, Observer<List<Post>>{ posts ->
@@ -58,6 +61,10 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Names", p.name)
             }*/
         })
+
+        refreshLayout.setOnRefreshListener {
+            recreate()
+        }
     }
 
     private fun goPostDetailPage(post: Post) {
