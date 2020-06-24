@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">StoryTell</string>
+    <string name="app_name">Poche</string>
+    <string name="image_transition">ImageTransition</string>
 </resources>

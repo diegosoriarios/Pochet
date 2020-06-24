@@ -2,9 +2,13 @@ package br.com.diego.storytell
 
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.transition.Transition
+import android.transition.TransitionValues
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +22,7 @@ import com.squareup.picasso.Picasso
 
 class DisplayMessageActivity : AppCompatActivity() {
     private lateinit var listView: ListView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +34,25 @@ class DisplayMessageActivity : AppCompatActivity() {
         }*/
 
         listView = findViewById(R.id.recipe_list_view)
+        progressBar = findViewById(R.id.progressBar)
 
         val model: MyViewModel by viewModels()
         model.getPosts().observe(this, Observer<List<Post>>{ posts ->
             val listItems = arrayOfNulls<String>(posts.size)
-            for (i in 0 until posts.size) {
+            for (i in posts.indices) {
                 val post = posts[i]
                 listItems[i] = post.name
+            }
+            if (posts.isNotEmpty()) {
+                progressBar.visibility = View.GONE
+                listView.visibility = View.VISIBLE
             }
             val adapter = PostAdapter(this, posts)
             listView.adapter = adapter
             listView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, view, position, id -> //here you can use the position to determine what checkbox to check
                     //this assumes that you have an array of your checkboxes as well. called checkbox
-                    Toast.makeText(this, posts[position].name, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, posts[position].image, Toast.LENGTH_SHORT).show()
                     goPostDetailPage(posts[position])
                 }
             /*post.forEach{ p ->
@@ -51,7 +61,7 @@ class DisplayMessageActivity : AppCompatActivity() {
         })
     }
 
-    fun goPostDetailPage(post: Post) {
+    private fun goPostDetailPage(post: Post) {
         val intent = Intent(this, PostDetailActivity::class.java).apply {
             putExtra("PostJson",Gson().toJson(post))
         }
@@ -95,5 +105,30 @@ class PostAdapter(private val context: Context, private val dataSource: List<Pos
         Picasso.get().load(post.image).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView)
 
         return rowView
+    }
+}
+
+class CustomTransition: Transition() {
+    // Define a key for storing a property value in
+    // TransitionValues.values with the syntax
+    // package_name:transition_class:property_name to avoid collisions
+    private val PROPNAME_BACKGROUND = "com.example.android.customtransition:CustomTransition:background"
+
+    override fun captureStartValues(transitionValues: TransitionValues) {
+        // Call the convenience method captureValues
+        captureValues(transitionValues)
+    }
+
+    override fun captureEndValues(transitionValues: TransitionValues) {
+        captureValues(transitionValues)
+    }
+
+    // For the view in transitionValues.view, get the values you
+    // want and put them in transitionValues.values
+    private fun captureValues(transitionValues: TransitionValues) {
+        // Get a reference to the view
+        val view = transitionValues.view
+        // Store its background property in the values map
+        transitionValues.values[PROPNAME_BACKGROUND] = view.background
     }
 }
