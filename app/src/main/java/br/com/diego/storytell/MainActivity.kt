@@ -17,7 +17,9 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import br.com.diego.storytell.fragments.ExploreFragment
 import br.com.diego.storytell.fragments.HomeFragment
+import br.com.diego.storytell.fragments.ProfileFragment
 import br.com.diego.storytell.models.Post
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
@@ -29,18 +31,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val homeFragment = HomeFragment()
+        val exploreFragment = ExploreFragment()
+        val profileFragment = ProfileFragment()
 
         makeCurrentFragment(homeFragment)
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.ic_home -> makeCurrentFragment(homeFragment)
+                R.id.ic_explore -> makeCurrentFragment(exploreFragment)
+                R.id.ic_profile -> makeCurrentFragment(profileFragment)
             }
             true
         }
     }
 
-    fun makeCurrentFragment(fragment: Fragment) =
+    private fun makeCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fl_wrapper, fragment)
             commit()

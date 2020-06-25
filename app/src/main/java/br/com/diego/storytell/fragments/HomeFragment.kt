@@ -62,22 +62,10 @@ class HomeFragment : Fragment() {
         })
 
         refreshLayout.setOnRefreshListener {
-            //recreate()
+            (activity as MainActivity?)?.recreate()
         }
 
         return view
-    }
-
-    private fun goPostDetailPage(post: Post, imageView: ImageView) {
-        /*val intent = Intent(this, PostDetailActivity::class.java).apply {
-            putExtra("PostJson", Gson().toJson(post))
-        }
-        //val imageView: ImageView = listView.findViewById(R.id.thumbnail)
-        val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            this, imageView, ViewCompat.getTransitionName(imageView).toString()
-        )
-        startActivity(intent, options.toBundle())
-         */
     }
 }
 
