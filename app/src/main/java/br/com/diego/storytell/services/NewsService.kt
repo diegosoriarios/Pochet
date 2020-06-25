@@ -2,10 +2,9 @@ package br.com.diego.storytell.services
 
 import br.com.diego.storytell.models.News
 import retrofit2.Call
-import br.com.diego.storytell.models.Post
 import retrofit2.http.GET
 
-interface PostService {
-    @GET("posts")
-    fun getPosts(): Call<List<Post>>
+interface NewsService {
+    @GET("articles")
+    fun getNews(): Call<List<News>>
 }

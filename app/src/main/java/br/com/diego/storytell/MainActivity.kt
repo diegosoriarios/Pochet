@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.diego.storytell.fragments.ExploreFragment
 import br.com.diego.storytell.fragments.HomeFragment
 import br.com.diego.storytell.fragments.ProfileFragment
+import br.com.diego.storytell.models.News
 import br.com.diego.storytell.models.Post
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso

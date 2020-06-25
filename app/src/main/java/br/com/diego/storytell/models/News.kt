@@ -2,17 +2,17 @@ package br.com.diego.storytell.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Post(
+data class News(
     @SerializedName("id")
     var id : Int,
-    @SerializedName("createdAt")
+    @SerializedName("created_at")
     var createdAt : String,
-    @SerializedName("name")
+    @SerializedName("title")
     var name : String,
-    @SerializedName("image")
-    var image: String?,
-    @SerializedName("tag")
+    @SerializedName("cover_image")
+    var image: String,
+    @SerializedName("tags")
     var tag: String,
-    @SerializedName("content")
+    @SerializedName("canonical_url")
     var content: String
 )

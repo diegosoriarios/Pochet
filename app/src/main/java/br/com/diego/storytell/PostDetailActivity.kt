@@ -17,6 +17,7 @@ class PostDetailActivity : AppCompatActivity() {
         val post: Post =
             Gson().fromJson(intent.getStringExtra("PostJson"), Post::class.java)
 
+
         supportActionBar?.title = post.name
 
         val titlePost: TextView = findViewById(R.id.titlePost)
