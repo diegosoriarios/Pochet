@@ -8,4 +8,10 @@
 
         <item name="android:windowContentTransitions">true</item>
     </style>
+    
+    <style
+        name="Theme.AppCompat.TelaCheia"
+        parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>
