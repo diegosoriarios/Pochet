@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import br.com.diego.storytell.ui.login.LoginActivity
 
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun nextPage() {
-        val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+        val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }

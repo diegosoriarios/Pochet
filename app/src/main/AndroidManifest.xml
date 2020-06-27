@@ -11,16 +11,24 @@
         android:roundIcon="@mipmap/splashscreen_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreenActivity" android:theme="@style/Theme.AppCompat.TelaCheia">
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/Theme.AppCompat.TelaCheia">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PostDetailActivity" >
-            <!--android:parentActivityName=".DisplayMessageActivity"
-            >-->
+        <activity android:name=".PostDetailActivity">
+
+            <!--
+            android:parentActivityName=".DisplayMessageActivity"
+            >
+            -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
