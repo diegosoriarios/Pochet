@@ -1,22 +1,40 @@
 package br.com.diego.storytell.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import br.com.diego.storytell.R
+import br.com.diego.storytell.interfaces.OnItemClickListener
 import br.com.diego.storytell.models.News
 import br.com.diego.storytell.models.Post
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.list_item.view.*
 
-class PostAdapter(private val context: Context, private val dataSource: List<Any>) : RecyclerView.Adapter<PostAdapter.MyViewHolder>() {
+class PostAdapter(val context: Context, private val dataSource: List<Any>)
+    : RecyclerView.Adapter<PostAdapter.MyViewHolder>() {
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private lateinit var onItemClickListener: OnItemClickListener
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    private var postToSend: Post? = null
+
+    class MyViewHolder(view: View, dataSource: List<Any>, onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(view) {
+        init {
+            view.setOnClickListener(View.OnClickListener {
+                onItemClickListener.onClickListener(dataSource[adapterPosition], it.findViewById(R.id.thumbnail))
+            })
+        }
+    }
+
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }
 
     override fun getItemCount(): Int {
         return dataSource.size
@@ -37,20 +55,16 @@ class PostAdapter(private val context: Context, private val dataSource: List<Any
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val rowView = inflater.inflate(R.layout.list_item, parent, false)
 
-        return MyViewHolder(rowView)
+        return MyViewHolder(rowView, dataSource, onItemClickListener)
     }
 
     //4
-    fun getView(position: Int, rowView: View): View {
-        // Get view for row item
-
+    private fun getView(position: Int, rowView: View): View {
         val titleTextView = rowView.findViewById(R.id.name) as TextView
 
         val subtitleTextView = rowView.findViewById(R.id.subtitle) as TextView
 
         val thumbnailImageView: ImageView = rowView.findViewById(R.id.thumbnail) as ImageView
-
-
 
         if (getItem(position) is Post) {
             val post = getItem(position) as Post

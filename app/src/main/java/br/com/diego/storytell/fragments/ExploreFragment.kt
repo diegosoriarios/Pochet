@@ -17,6 +17,7 @@ import br.com.diego.storytell.MainActivity
 import br.com.diego.storytell.MyViewModel
 import br.com.diego.storytell.R
 import br.com.diego.storytell.adapters.PostAdapter
+import br.com.diego.storytell.interfaces.OnItemClickListener
 import br.com.diego.storytell.models.News
 import br.com.diego.storytell.models.Post
 import com.google.gson.Gson
@@ -66,20 +67,14 @@ class ExploreFragment : Fragment() {
             val adapter = PostAdapter(ctx, news)
             val linearLayoutManager = LinearLayoutManager(ctx)
             listView.adapter = adapter
-            listView.layoutManager = linearLayoutManager
-            /*listView.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id ->
-                    val imageItem = view.findViewById<ImageView>(R.id.thumbnail)
-                    val new = news[position]
-                    try {
-                        val post = Post(new.id, new.createdAt, new.name, new.image, new.tag, new.content)
-                        (activity as MainActivity?)?.goPostDetailPage(post, imageItem)
-                    } catch (e: Exception) {
-                        Log.d("ERRORRRRRRRR", "$e")
-                    }
+            adapter.setOnItemClickListener(object : OnItemClickListener {
+                override fun onClickListener(post: Any,  imageView: ImageView) {
+                    val modelPost = post as News
+                    val post = Post(modelPost.id, modelPost.createdAt, modelPost.name, modelPost.image, modelPost.tag, modelPost.content)
+                    (activity as MainActivity?)?.goPostDetailPage(post, imageView)
                 }
-
-             */
+            })
+            listView.layoutManager = linearLayoutManager
         })
 
         refreshLayout.setOnRefreshListener {

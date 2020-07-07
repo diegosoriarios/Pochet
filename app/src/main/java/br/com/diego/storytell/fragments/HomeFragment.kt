@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.transition.Transition
 import android.transition.TransitionValues
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import br.com.diego.storytell.MainActivity
 import br.com.diego.storytell.MyViewModel
 import br.com.diego.storytell.R
 import br.com.diego.storytell.adapters.PostAdapter
+import br.com.diego.storytell.interfaces.OnItemClickListener
 import br.com.diego.storytell.models.Post
 import com.squareup.picasso.Picasso
 
@@ -64,13 +66,12 @@ class HomeFragment : Fragment() {
             val adapter = PostAdapter(ctx, posts)
             val linearLayoutManager = LinearLayoutManager(ctx)
             listView.adapter = adapter
-            listView.layoutManager = linearLayoutManager
-            /*listView.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id ->
-                    val imageItem = view.findViewById<ImageView>(R.id.thumbnail)
-                    (activity as MainActivity?)?.goPostDetailPage(posts[position], imageItem)
+            adapter.setOnItemClickListener(object : OnItemClickListener {
+                override fun onClickListener(post: Any,  imageView: ImageView) {
+                    (activity as MainActivity?)?.goPostDetailPage(post as Post, imageView)
                 }
-             */
+            })
+            listView.layoutManager = linearLayoutManager
         })
 
         refreshLayout.setOnRefreshListener {
