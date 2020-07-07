@@ -7,32 +7,42 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import br.com.diego.storytell.R
 import br.com.diego.storytell.models.News
 import br.com.diego.storytell.models.Post
 import com.squareup.picasso.Picasso
 
-class PostAdapter(private val context: Context, private val dataSource: List<Any>) : BaseAdapter() {
+class PostAdapter(private val context: Context, private val dataSource: List<Any>) : RecyclerView.Adapter<PostAdapter.MyViewHolder>() {
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    override fun getCount(): Int {
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    override fun getItemCount(): Int {
         return dataSource.size
     }
 
-    //2
-    override fun getItem(position: Int): Any {
+    private fun getItem(position: Int): Any {
         return dataSource[position]
     }
 
-    //3
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-    //4
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        // Get view for row item
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        getView(position, holder.itemView)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val rowView = inflater.inflate(R.layout.list_item, parent, false)
+
+        return MyViewHolder(rowView)
+    }
+
+    //4
+    fun getView(position: Int, rowView: View): View {
+        // Get view for row item
 
         val titleTextView = rowView.findViewById(R.id.name) as TextView
 

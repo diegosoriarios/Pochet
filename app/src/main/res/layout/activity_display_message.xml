@@ -22,8 +22,8 @@
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/recipe_list_view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyler_list_view"
             android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="0dp"

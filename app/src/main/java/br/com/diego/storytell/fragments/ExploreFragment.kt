@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.diego.storytell.MainActivity
 import br.com.diego.storytell.MyViewModel
@@ -22,10 +24,16 @@ import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 class ExploreFragment : Fragment() {
-    private lateinit var listView: ListView
+    private lateinit var listView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var model: MyViewModel
+    private lateinit var ctx: Context
+
+    override fun onAttach(context: Context) {
+        this.ctx = context
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         model = ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
@@ -40,7 +48,7 @@ class ExploreFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val view: View = inflater.inflate(R.layout.activity_display_message, container, false)
 
-        listView = view.findViewById(R.id.recipe_list_view)
+        listView = view.findViewById(R.id.recyler_list_view)
         progressBar = view.findViewById(R.id.progressBar)
         refreshLayout = view.findViewById(R.id.swiperefresh)
 
@@ -55,9 +63,11 @@ class ExploreFragment : Fragment() {
                 progressBar.visibility = View.GONE
                 listView.visibility = View.VISIBLE
             }
-            val adapter = activity?.applicationContext?.let { PostAdapter(it, news) }
+            val adapter = PostAdapter(ctx, news)
+            val linearLayoutManager = LinearLayoutManager(ctx)
             listView.adapter = adapter
-            listView.onItemClickListener =
+            listView.layoutManager = linearLayoutManager
+            /*listView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, view, position, id ->
                     val imageItem = view.findViewById<ImageView>(R.id.thumbnail)
                     val new = news[position]
@@ -68,6 +78,8 @@ class ExploreFragment : Fragment() {
                         Log.d("ERRORRRRRRRR", "$e")
                     }
                 }
+
+             */
         })
 
         refreshLayout.setOnRefreshListener {

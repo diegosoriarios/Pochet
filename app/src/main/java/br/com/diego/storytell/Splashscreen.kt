@@ -16,7 +16,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun nextPage() {
-        val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+        val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
