@@ -1,17 +1,17 @@
 package br.com.diego.storytell.adapters
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import br.com.diego.storytell.R
 import br.com.diego.storytell.interfaces.OnItemClickListener
+import br.com.diego.storytell.interfaces.OnLongClickListener
 import br.com.diego.storytell.models.News
 import br.com.diego.storytell.models.Post
 import com.squareup.picasso.Picasso
@@ -21,15 +21,25 @@ class PostAdapter(val context: Context, private val dataSource: List<Any>)
     : RecyclerView.Adapter<PostAdapter.MyViewHolder>() {
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var onItemClickListener: OnItemClickListener
-
-    private var postToSend: Post? = null
+    private lateinit var onLongClickListener: OnLongClickListener
 
     class MyViewHolder(view: View, dataSource: List<Any>, onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(view) {
         init {
+            view.setOnLongClickListener(View.OnLongClickListener {
+                val itemContainer: LinearLayout = it.findViewById(R.id.list_item_container)
+                itemContainer.background = ColorDrawable(Color.BLUE)
+                var post = dataSource[adapterPosition] as Post
+                Log.d("LONG CLICK", post.name)
+                true
+            })
             view.setOnClickListener(View.OnClickListener {
                 onItemClickListener.onClickListener(dataSource[adapterPosition], it.findViewById(R.id.thumbnail))
             })
         }
+    }
+
+    fun setOnLongClickListener(onLongClickListener: OnLongClickListener) {
+        this.onLongClickListener = onLongClickListener
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {

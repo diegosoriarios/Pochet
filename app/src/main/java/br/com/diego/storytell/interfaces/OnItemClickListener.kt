@@ -6,3 +6,7 @@ import br.com.diego.storytell.models.Post
 interface OnItemClickListener {
     fun onClickListener(post: Any, imageView: ImageView)
 }
+
+interface OnLongClickListener {
+    fun onLongClickListener(post: Any)
+}

@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,7 +20,9 @@ import br.com.diego.storytell.MainActivity
 import br.com.diego.storytell.MyViewModel
 import br.com.diego.storytell.R
 import br.com.diego.storytell.adapters.PostAdapter
+import br.com.diego.storytell.callbacks.ItemTouchCallback
 import br.com.diego.storytell.interfaces.OnItemClickListener
+import br.com.diego.storytell.interfaces.OnLongClickListener
 import br.com.diego.storytell.models.Post
 import com.squareup.picasso.Picasso
 
@@ -66,6 +69,13 @@ class HomeFragment : Fragment() {
             val adapter = PostAdapter(ctx, posts)
             val linearLayoutManager = LinearLayoutManager(ctx)
             listView.adapter = adapter
+            //var itemTouchHelper = ItemTouchHelper(ItemTouchCallback(adapter))
+            //itemTouchHelper.attachToRecyclerView(listView)
+            adapter.setOnLongClickListener(object : OnLongClickListener {
+                override fun onLongClickListener(post: Any) {
+
+                }
+            })
             adapter.setOnItemClickListener(object : OnItemClickListener {
                 override fun onClickListener(post: Any,  imageView: ImageView) {
                     (activity as MainActivity?)?.goPostDetailPage(post as Post, imageView)
